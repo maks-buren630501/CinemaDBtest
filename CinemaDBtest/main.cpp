@@ -4,6 +4,6 @@ using namespace std;
 
 void main()
 {
-	cout << "asc" << endl;
+	cout << 2+2<< endl;
 	system("pause");
 }
