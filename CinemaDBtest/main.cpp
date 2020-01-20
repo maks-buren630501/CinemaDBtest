@@ -56,7 +56,20 @@ int main()
 				cout << ": Error: Number of fields in the result set is 0." << endl;
 			}
 
+			cout << ": Fetch the actual data: " << endl;
+			int rowCount = 0;
+			while (!pRS->AdoNSEOF) {
+				for (long nIndex = 0; nIndex < pFields->GetCount(); nIndex++) {
+					cout << " | " << _bstr_t(pFields->GetItem(nIndex)->GetValue());
+				}
+				cout << endl;
+				pRS->MoveNext();
+				rowCount++;
+			}
+			cout << ": Total Row Count: " << rowCount << endl;
 		}
+
+		pRS->Close();
 		pCn->Close();
 	
 	system("pause");
