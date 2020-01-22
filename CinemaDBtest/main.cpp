@@ -86,15 +86,22 @@ public:
 		return listOfFilms;
 	}
 
-	void InsertUser(const char* nickname, const char* lastname, const char* firstname)
+	int InsertUser(const char* nickname, const char* lastname, const char* firstname)
 	{
-		hr = pComand.CreateInstance(__uuidof(ADODB::Command));
-		pComand->ActiveConnection = pConnection;
-		//string temp = "INSERT INTO Users (Nickname,Last_name,First_name) VALUES (" + string(nickname) + "," + string(lastname) + "," + string(firstname) + ");";
-		string temp = "INSERT INTO Users (Nickname,Last_name,First_name) VALUES (uuu,qqq,asd);";
-		_bstr_t query = temp.c_str();
-		pComand->CommandText = query;
-		pComand->Execute(NULL, NULL, ADODB::adCmdText);
+		try
+		{
+			hr = pComand.CreateInstance(__uuidof(ADODB::Command));
+			pComand->ActiveConnection = pConnection;
+			string temp = "INSERT INTO Users (Nickname,Last_name,First_name) VALUES (\'" + string(nickname) + "\',\'" + string(lastname) + "\',\'" + string(firstname) + "\');";
+			_bstr_t query = temp.c_str();
+			pComand->CommandText = query;
+			pComand->Execute(NULL, NULL, ADODB::adCmdText);
+			return 0;
+		}
+		catch(exception e)
+		{
+			return -11;
+		}
 	}
 
 };
@@ -104,7 +111,7 @@ int main()
 {
 	CinemaDB *cinemaDB = new CinemaDB("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
 	cout << cinemaDB->getListStringNameOfFilm() << endl;
-	cinemaDB->InsertUser("Clotch","asd","qwe");
+	cinemaDB->InsertUser("Clotch","Sergeev","Artem");
 	system("pause");
 
 	/*
