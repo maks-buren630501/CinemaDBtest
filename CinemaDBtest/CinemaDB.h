@@ -80,6 +80,7 @@ public:
 			cout << "error" << endl;
 		}
 		pRecordset->Close();
+		listOfFilms += "\0";
 		return listOfFilms;
 	}
 
@@ -114,7 +115,39 @@ public:
 		return listOfUsers;
 	}
 	
+	string getListOfSessionByFileTitle(const char* title)
+	{
+		string listOfSession;
+		TESTHR(pRecordset.CreateInstance(__uuidof(ADODB::Recordset)));
+		string request = "SELECT Num FROM Sessions WHERE Film=\'" + string(title) + "\';";
+		_bstr_t query = request.c_str();
+		hr = pRecordset->Open(query, _variant_t((IDispatch *)pConnection, true), ADODB::adOpenUnspecified, ADODB::adLockUnspecified, ADODB::adCmdText);
+		if (SUCCEEDED(hr))
+		{
+			ADODB::Fields* pFields = NULL;
+			hr = pRecordset->get_Fields(&pFields);
+			if (pFields && pFields->GetCount() <= 0)
+			{
+				cout << ": Error: Number of fields in the result set is 0." << endl;
+			}
+			while (!pRecordset->AdoNSEOF) {
+				for (long nIndex = 0; nIndex < pFields->GetCount(); nIndex++) {
 
+					string temp = bstr_to_str(_bstr_t(pFields->GetItem(nIndex)->GetValue()));
+					listOfSession += temp + "|";
+				}
+				pRecordset->MoveNext();
+			}
+		}
+		else
+		{
+			cout << "error" << endl;
+		}
+		pRecordset->Close();
+		listOfSession += "\0";
+		return listOfSession;
+	}
+	
 	int InsertUser(const char* nickname, const char* lastname, const char* firstname)
 	{
 		try

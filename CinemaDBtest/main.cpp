@@ -20,12 +20,13 @@ int main()
 	//cout << cinemaDB->getListStringNameOfFilm() << endl;
 	//cinemaDB->InsertUser("Clotch", "Sergeev", "Artem");
 	list<string> listOfUsers= cinemaDB->getListOfUsers();
-	for(string var : listOfUsers)
+	/*for(string var : listOfUsers)
 	{
 		cout << var << endl;
 	}
 	int a = checkUser("Zero", listOfUsers);
-	cout << a << endl;
+	cout << a << endl;*/
+	cout << cinemaDB->getListOfSessionByFileTitle("Staliningrad");
 	system("pause");
 
 
