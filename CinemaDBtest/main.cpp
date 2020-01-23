@@ -10,14 +10,22 @@
 #include "icrsint.h"  
 #include <string>
 #include"CinemaDB.h"
+#include<list>
 
 using namespace std;
 
 int main()
 {
 	CinemaDB *cinemaDB = new CinemaDB("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
-	cout << cinemaDB->getListStringNameOfFilm() << endl;
+	//cout << cinemaDB->getListStringNameOfFilm() << endl;
 	//cinemaDB->InsertUser("Clotch", "Sergeev", "Artem");
+	list<string> listOfUsers= cinemaDB->getListOfUsers();
+	for(string var : listOfUsers)
+	{
+		cout << var << endl;
+	}
+	int a = checkUser("Zero", listOfUsers);
+	cout << a << endl;
 	system("pause");
 
 

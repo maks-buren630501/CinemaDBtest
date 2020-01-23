@@ -10,3 +10,15 @@ string bstr_to_str(BSTR source)
 	return char_array;
 }
 
+int checkUser(const char* nickname, list<string> listOfUsers)
+{
+	std::list<string>::iterator iterator = std::find(listOfUsers.begin(), listOfUsers.end(), string(nickname));
+	if (iterator == listOfUsers.end())
+	{
+		return -1;
+	}
+	else
+	{
+		return 1;
+	}
+}
