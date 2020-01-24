@@ -182,7 +182,39 @@ public:
 		
 	}
 
-	
+	int getHallSizeByNumOfHall(int numOfHall)
+	{
+		string sizeOfHall;
+		TESTHR(pRecordset.CreateInstance(__uuidof(ADODB::Recordset)));
+		string request = "SELECT hallSize FROM Halls WHERE Num = " + std::to_string(numOfHall) + ";";
+		_bstr_t query = request.c_str();
+		hr = pRecordset->Open(query, _variant_t((IDispatch *)pConnection, true), ADODB::adOpenUnspecified, ADODB::adLockUnspecified, ADODB::adCmdText);
+		if (SUCCEEDED(hr))
+		{
+			ADODB::Fields* pFields = NULL;
+			hr = pRecordset->get_Fields(&pFields);
+			if (pFields && pFields->GetCount() <= 0)
+			{
+				cout << ": Error: Number of fields in the result set is 0." << endl;
+			}
+			while (!pRecordset->AdoNSEOF) {
+				for (long nIndex = 0; nIndex < pFields->GetCount(); nIndex++) {
+
+					string temp = bstr_to_str(_bstr_t(pFields->GetItem(nIndex)->GetValue()));
+					sizeOfHall += temp;
+				}
+				pRecordset->MoveNext();
+			}
+		}
+		else
+		{
+			cout << "error" << endl;
+		}
+		pRecordset->Close();
+		sizeOfHall += "\0";
+		return std::stoi(sizeOfHall);
+
+	}
 	
 	int InsertUser(const char* nickname, const char* lastname, const char* firstname)
 	{
