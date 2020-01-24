@@ -12,6 +12,7 @@ string bstr_to_str(BSTR source)
 
 int checkUser(const char* nickname, list<string> listOfUsers)
 {
+
 	std::list<string>::iterator iterator = std::find(listOfUsers.begin(), listOfUsers.end(), string(nickname));
 	if (iterator == listOfUsers.end())
 	{
@@ -21,4 +22,29 @@ int checkUser(const char* nickname, list<string> listOfUsers)
 	{
 		return 1;
 	}
+}
+
+list<int> getFreePlacesList(list<int> listOfBusyPlaces, int sizeOfHall)
+{
+	list<int> allPlacesList;
+	int flag = 0;
+	for (int i = 1; i < sizeOfHall + 1; i++)
+	{
+		for (int j : listOfBusyPlaces)
+		{
+			if (i == j)
+			{
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 1)
+		{
+			flag = 0;
+			continue;
+		}
+		allPlacesList.push_back(i);
+	}
+	return allPlacesList;
+    
 }

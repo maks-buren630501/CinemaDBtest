@@ -27,14 +27,20 @@ int main()
 	int a = checkUser("Zero", listOfUsers);
 	cout << a << endl;*/
 	//cout << cinemaDB->getListOfSessionByFileTitle("Staliningrad");
-	cout << cinemaDB->getHallSizeByNumOfHall(cinemaDB->getHallByNumOfSession(2))<<endl;
+	/*cout << cinemaDB->getHallSizeByNumOfHall(cinemaDB->getHallByNumOfSession(2))<<endl;
 	list<int> list =  cinemaDB->getBusyPlacesByNumOfSession(2);
 
 	for (int a : list)
 	{
 		cout << a << endl;
 	}
+	*/
 
+	list<int> list = getFreePlacesList(cinemaDB->getBusyPlacesByNumOfSession(2),cinemaDB->getHallSizeByNumOfHall(cinemaDB->getHallByNumOfSession(2)));
+	for (int a : list)
+	{
+		cout << a << " | ";
+	}
 	system("pause");
 
 

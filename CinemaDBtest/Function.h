@@ -11,3 +11,5 @@ string bstr_to_str(BSTR source);
 
 int checkUser(const char* nickname,list<string> listOfUsers);
 
+list<int> getFreePlacesList(list<int> listOfBusyPlaces, int sizeOfHall);
+
