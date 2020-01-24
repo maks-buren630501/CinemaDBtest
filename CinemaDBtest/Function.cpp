@@ -41,10 +41,21 @@ list<int> getFreePlacesList(list<int> listOfBusyPlaces, int sizeOfHall)
 		if (flag == 1)
 		{
 			flag = 0;
+
 			continue;
 		}
 		allPlacesList.push_back(i);
 	}
 	return allPlacesList;
     
+}
+
+string getStringOfFreePlaces(list<int> freePlaces)
+{
+	string freePlaceString;
+	for (int i : freePlaces)
+	{
+		freePlaceString += std::to_string(i) + "|";
+	}
+	return freePlaceString;
 }

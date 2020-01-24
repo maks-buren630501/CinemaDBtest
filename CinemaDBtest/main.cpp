@@ -37,10 +37,8 @@ int main()
 	*/
 
 	list<int> list = getFreePlacesList(cinemaDB->getBusyPlacesByNumOfSession(2),cinemaDB->getHallSizeByNumOfHall(cinemaDB->getHallByNumOfSession(2)));
-	for (int a : list)
-	{
-		cout << a << " | ";
-	}
+	cout << getStringOfFreePlaces(list) << endl;
+	
 	system("pause");
 
 

@@ -13,3 +13,5 @@ int checkUser(const char* nickname,list<string> listOfUsers);
 
 list<int> getFreePlacesList(list<int> listOfBusyPlaces, int sizeOfHall);
 
+string getStringOfFreePlaces(list<int> freePlaces);
+
