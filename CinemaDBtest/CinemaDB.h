@@ -182,11 +182,11 @@ public:
 		
 	}
 
-	int getHallSizeByNumOfHall(int numOfHall)
+	int getHallSizeByNumOfSession(int numOfSession)  //SELECT Hall FROM Sessions WHERE Num = " + std::to_string(numOfSession) + ";";
 	{
 		string sizeOfHall;
 		TESTHR(pRecordset.CreateInstance(__uuidof(ADODB::Recordset)));
-		string request = "SELECT hallSize FROM Halls WHERE Num = " + std::to_string(numOfHall) + ";";
+		string request = "SELECT hallSize FROM Halls WHERE Num = (SELECT Hall FROM Sessions WHERE Num = " + std::to_string(numOfSession) + ");";
 		_bstr_t query = request.c_str();
 		hr = pRecordset->Open(query, _variant_t((IDispatch *)pConnection, true), ADODB::adOpenUnspecified, ADODB::adLockUnspecified, ADODB::adCmdText);
 		if (SUCCEEDED(hr))
@@ -213,7 +213,6 @@ public:
 		pRecordset->Close();
 		sizeOfHall += "\0";
 		return std::stoi(sizeOfHall);
-
 	}
 
 	list<int> getBusyPlacesByNumOfSession(int numOfSession)
