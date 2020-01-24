@@ -26,7 +26,8 @@ int main()
 	}
 	int a = checkUser("Zero", listOfUsers);
 	cout << a << endl;*/
-	cout << cinemaDB->getListOfSessionByFileTitle("Staliningrad");
+	//cout << cinemaDB->getListOfSessionByFileTitle("Staliningrad");
+	cout << cinemaDB->getHallByNumOfSession(2);
 	system("pause");
 
 
