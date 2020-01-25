@@ -29,7 +29,6 @@ private:
 	ADODB::_ConnectionPtr pConnection = NULL;
 	ADODB::_RecordsetPtr pRecordset = NULL;
 	ADODB::_CommandPtr pComand = NULL;
-	_bstr_t bstrConnect;
 	HRESULT hr;
 public:
 	CinemaDB(const char* conectPath)
@@ -182,7 +181,7 @@ public:
 		
 	}
 
-	int getHallSizeByNumOfSession(int numOfSession)  //SELECT Hall FROM Sessions WHERE Num = " + std::to_string(numOfSession) + ";";
+	int getHallSizeByNumOfSession(int numOfSession)  
 	{
 		string sizeOfHall;
 		TESTHR(pRecordset.CreateInstance(__uuidof(ADODB::Recordset)));
@@ -248,7 +247,7 @@ public:
 		return listOfBusyPlace;
 	}
 	
-	int InsertUser(const char* nickname, const char* lastname, const char* firstname)
+	int insertUser(const char* nickname, const char* lastname, const char* firstname)
 	{
 		try
 		{
@@ -262,7 +261,25 @@ public:
 		}
 		catch (exception e)
 		{
-			return -11;
+			return -1;
+		}
+	}
+
+	int insertClient(const char* nickname, int numOfSession, int place)
+	{
+		try
+		{
+			hr = pComand.CreateInstance(__uuidof(ADODB::Command));
+			pComand->ActiveConnection = pConnection;
+			string temp = "INSERT INTO Clients (Nickname,numOfSession,Place) VALUES (\'" + string(nickname) + "\'," + std::to_string(numOfSession) + "," + std::to_string(place) + ");";
+			_bstr_t query = temp.c_str();
+			pComand->CommandText = query;
+			pComand->Execute(NULL, NULL, ADODB::adCmdText);
+			return 0;
+		}
+		catch (exception e)
+		{
+			return -1;
 		}
 	}
 

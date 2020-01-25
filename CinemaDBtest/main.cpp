@@ -18,8 +18,8 @@ int main()
 {
 	CinemaDB *cinemaDB = new CinemaDB("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
 	//cout << cinemaDB->getListStringNameOfFilm() << endl;
-	//cinemaDB->InsertUser("Clotch", "Sergeev", "Artem");
-	list<string> listOfUsers= cinemaDB->getListOfUsers();
+	//cinemaDB->insertUser("Erno", "Sergeev", "Artem");
+	//list<string> listOfUsers= cinemaDB->getListOfUsers();
 	/*for(string var : listOfUsers)
 	{
 		cout << var << endl;
@@ -36,9 +36,11 @@ int main()
 	}
 	*/
 
-	list<int> list = getFreePlacesList(cinemaDB->getBusyPlacesByNumOfSession(2),cinemaDB->getHallSizeByNumOfSession(2));
+	/*list<int> list = getFreePlacesList(cinemaDB->getBusyPlacesByNumOfSession(2),cinemaDB->getHallSizeByNumOfSession(2));
 	cout << getStringOfFreePlaces(list) << endl;
-	
+	*/
+	cinemaDB->insertClient("Pushkin",1,23);
+
 	system("pause");
 
 
