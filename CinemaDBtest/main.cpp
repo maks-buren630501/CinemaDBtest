@@ -39,7 +39,7 @@ int main()
 	/*list<int> list = getFreePlacesList(cinemaDB->getBusyPlacesByNumOfSession(2),cinemaDB->getHallSizeByNumOfSession(2));
 	cout << getStringOfFreePlaces(list) << endl;
 	*/
-	cinemaDB->insertClient("Pushkin",1,23);
+	//cinemaDB->insertClient("Pushkin",1,23);
 
 	system("pause");
 
