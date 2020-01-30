@@ -15,3 +15,5 @@ list<int> getFreePlacesList(list<int> listOfBusyPlaces, int sizeOfHall);
 
 string getStringOfFreePlaces(list<int> freePlaces);
 
+string getNickNameFromRequest(string request);
+

@@ -59,3 +59,11 @@ string getStringOfFreePlaces(list<int> freePlaces)
 	}
 	return freePlaceString;
 }
+
+string getNickNameFromRequest(string request)
+{
+	string nickName;
+	int beginOfNickName = request.find("|") + 1;
+	nickName = request.substr(beginOfNickName,request.size()-beginOfNickName);
+	return nickName;
+}

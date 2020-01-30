@@ -8,34 +8,69 @@
 #include"CinemaDB.h"
 #include"Function.h"
 #include <windows.h>
-
+#include<thread>
 #define _WIN32_WINNT 0x501
 
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #pragma comment(lib, "Ws2_32.lib")
 
+const int maxBufferSize = 1024;
+
 using namespace std;
 
-DWORD WINAPI serverWork(CONST LPVOID lpParam)
+void serverWork(int clientSocket,CinemaDB *cinemaDB)
 {
+	while (true)
+	{
+		char requestBuffer[maxBufferSize+1];
+		int requestLength;
+		string stringOfRequest;
+		requestLength = recv(clientSocket,requestBuffer, maxBufferSize,0);
+		if (requestLength == SOCKET_ERROR)// ошибка получения данных
+		{
+			cout << "recv error" << endl;
+			break;
+		}
+		if (requestLength == 0)
+		{
+			cout << "empty reqv" << endl;
+			continue;
+		}
+		requestBuffer[requestLength] = '\0';
+		stringOfRequest = requestBuffer;
+		if (stringOfRequest.find("checkUserNickName") != std::string::npos)
+		{
+			workWithUserAddRequest(cinemaDB,clientSocket,stringOfRequest);
+		}
 
-	ExitThread(0);
+
+	}
 }
 
+
+int workWithUserAddRequest(CinemaDB *cinemaDB, int clientSocket, string request)
+{
+	list<string> listOfUsers = cinemaDB->getListOfUsers();
+	string nickName = getNickNameFromRequest(request);
+
+}
 
 class Server
 {
 private:
+	CinemaDB *cinemaDB;
 	WSADATA wsaData;
 	struct addrinfo *address; 
 	struct addrinfo hints;
 	SOCKET serverSocket;
 	SOCKET clientSocket;
 	int result;
+
 public:
-	Server(const char* ipAddress, const char* port)
+	Server(const char* ipAddress, const char* port, const char* conectPath)
 	{
+		cinemaDB = new CinemaDB(conectPath);
 		result = WSAStartup(MAKEWORD(2, 2), &wsaData);//старт использования библиотеки сокетов
 		if (result != 0)
 		{
@@ -97,19 +132,12 @@ public:
 			}
 			else
 			{
-				HANDLE handleThread = CreateThread(NULL,0,&serverWork,(LPVOID)clientSocket,0,NULL);
-				if (NULL == handleThread)
-				{
-					cout << "error create thread" << endl;
-					return -3;
-				}
+				std::thread clientThread(serverWork,clientSocket,std::ref(this->cinemaDB));
+				clientThread.detach();
 			}
 
 		}
 	}
 	
 	
-	
-
-
 };
