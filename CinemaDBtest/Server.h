@@ -51,9 +51,21 @@ void serverWork(int clientSocket,CinemaDB *cinemaDB)
 
 int workWithUserAddRequest(CinemaDB *cinemaDB, int clientSocket, string request)
 {
+	string answer;
 	list<string> listOfUsers = cinemaDB->getListOfUsers();
 	string nickName = getNickNameFromRequest(request);
-
+	if (std::find(listOfUsers.begin(), listOfUsers.end(), nickName) == listOfUsers.end())
+	{
+		answer = "nickNameIsFree";
+		send(clientSocket,answer.c_str(),answer.length(),0);
+		return 0;
+	}
+	else
+	{
+		answer = "nickNameIsBusy";
+		send(clientSocket, answer.c_str(), answer.length(), 0);
+		return 1;
+	}
 }
 
 class Server
