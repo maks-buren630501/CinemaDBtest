@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CinemaDB.h" />
+    <ClInclude Include="ClientThread.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Server.h" />
   </ItemGroup>

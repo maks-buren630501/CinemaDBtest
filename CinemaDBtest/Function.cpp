@@ -67,3 +67,23 @@ string getNickNameFromRequest(string request)
 	nickName = request.substr(beginOfNickName,request.size()-beginOfNickName);
 	return nickName;
 }
+
+string getLastNameFromRequest(string request)
+{
+	string lastName;
+	int beginOfNickName = request.find("|") + 1;
+	string lastNameAndFirstName = request.substr(beginOfNickName, request.size() - beginOfNickName);
+	int endOfLastName = lastNameAndFirstName.find("|");
+	lastName = lastNameAndFirstName.substr(0, endOfLastName);
+	return lastName;
+}
+
+string getFirstNameFromRequest(string request)
+{
+	string firstName;
+	int beginOfNickName = request.find("|") + 1;
+	string lastNameAndFirstName = request.substr(beginOfNickName, request.size() - beginOfNickName);
+	int beginOfLastName = lastNameAndFirstName.find("|") + 1;
+	firstName = lastNameAndFirstName.substr(beginOfLastName, lastNameAndFirstName.size() - beginOfLastName - 1);
+	return firstName;
+}

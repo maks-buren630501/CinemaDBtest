@@ -17,3 +17,7 @@ string getStringOfFreePlaces(list<int> freePlaces);
 
 string getNickNameFromRequest(string request);
 
+string getLastNameFromRequest(string request);
+
+string getFirstNameFromRequest(string request);
+

@@ -6,6 +6,7 @@
 #include <chrono>
 #include<fstream>
 #include"CinemaDB.h"
+#include"ClientThread.h"
 #include"Function.h"
 #include <windows.h>
 #include<thread>
@@ -19,59 +20,31 @@ const int maxBufferSize = 1024;
 
 using namespace std;
 
-void serverWork(int clientSocket,CinemaDB *cinemaDB)
+void serverWork(int clientSocket,string conectPath)
 {
-	while (true)
+	ClientThread *clientThread = new ClientThread(clientSocket,conectPath.c_str());
+	if (clientThread->workClient() < 0)
 	{
-		char requestBuffer[maxBufferSize+1];
-		int requestLength;
-		string stringOfRequest;
-		requestLength = recv(clientSocket,requestBuffer, maxBufferSize,0);
-		if (requestLength == SOCKET_ERROR)// ошибка получения данных
-		{
-			cout << "recv error" << endl;
-			break;
-		}
-		if (requestLength == 0)
-		{
-			cout << "empty reqv" << endl;
-			continue;
-		}
-		requestBuffer[requestLength] = '\0';
-		stringOfRequest = requestBuffer;
-		if (stringOfRequest.find("checkUserNickName") != std::string::npos)
-		{
-			workWithUserAddRequest(cinemaDB,clientSocket,stringOfRequest);
-		}
-
-
-	}
-}
-
-
-int workWithUserAddRequest(CinemaDB *cinemaDB, int clientSocket, string request)
-{
-	string answer;
-	list<string> listOfUsers = cinemaDB->getListOfUsers();
-	string nickName = getNickNameFromRequest(request);
-	if (std::find(listOfUsers.begin(), listOfUsers.end(), nickName) == listOfUsers.end())
-	{
-		answer = "nickNameIsFree";
-		send(clientSocket,answer.c_str(),answer.length(),0);
-		return 0;
+		cout << "error of client thread working" << endl;
+		delete clientThread;
+		return;
 	}
 	else
 	{
-		answer = "nickNameIsBusy";
-		send(clientSocket, answer.c_str(), answer.length(), 0);
-		return 1;
+		cout << "end work of client thread" << endl;
+		delete clientThread;
+		return;
 	}
+	
+
 }
+
+
 
 class Server
 {
 private:
-	CinemaDB *cinemaDB;
+	string dbCinemaConectPath;
 	WSADATA wsaData;
 	struct addrinfo *address; 
 	struct addrinfo hints;
@@ -82,7 +55,7 @@ private:
 public:
 	Server(const char* ipAddress, const char* port, const char* conectPath)
 	{
-		cinemaDB = new CinemaDB(conectPath);
+		this->dbCinemaConectPath = conectPath;
 		result = WSAStartup(MAKEWORD(2, 2), &wsaData);//старт использования библиотеки сокетов
 		if (result != 0)
 		{
@@ -144,7 +117,7 @@ public:
 			}
 			else
 			{
-				std::thread clientThread(serverWork,clientSocket,std::ref(this->cinemaDB));
+				std::thread clientThread(serverWork,clientSocket, this->dbCinemaConectPath);
 				clientThread.detach();
 			}
 
