@@ -57,33 +57,37 @@ string getStringOfFreePlaces(list<int> freePlaces)
 	{
 		freePlaceString += std::to_string(i) + "|";
 	}
+	freePlaceString += "\0";
 	return freePlaceString;
 }
 
-string getNickNameFromRequest(string request)
+string getNameFromRequest(string request)
 {
-	string nickName;
-	int beginOfNickName = request.find("|") + 1;
-	nickName = request.substr(beginOfNickName,request.size()-beginOfNickName);
-	return nickName;
+	string Name;
+	int beginOfName = request.find("|") + 1;
+	Name = request.substr(beginOfName,request.size()-beginOfName-1);
+	Name += '\0';
+	return Name;
 }
 
-string getLastNameFromRequest(string request)
+string getFirstParametrFromRequest(string request)
 {
-	string lastName;
-	int beginOfNickName = request.find("|") + 1;
-	string lastNameAndFirstName = request.substr(beginOfNickName, request.size() - beginOfNickName);
-	int endOfLastName = lastNameAndFirstName.find("|");
-	lastName = lastNameAndFirstName.substr(0, endOfLastName);
-	return lastName;
+	string FirstParametr;
+	int beginOfFirstParametr = request.find("|") + 1;
+	string parametrs= request.substr(beginOfFirstParametr, request.size() - beginOfFirstParametr);
+	int endOfFirstParametr = parametrs.find("|");
+	FirstParametr = parametrs.substr(0, endOfFirstParametr);
+	FirstParametr += '\0';
+	return FirstParametr;
 }
 
-string getFirstNameFromRequest(string request)
+string getSecondParametrFromRequest(string request)
 {
-	string firstName;
-	int beginOfNickName = request.find("|") + 1;
-	string lastNameAndFirstName = request.substr(beginOfNickName, request.size() - beginOfNickName);
-	int beginOfLastName = lastNameAndFirstName.find("|") + 1;
-	firstName = lastNameAndFirstName.substr(beginOfLastName, lastNameAndFirstName.size() - beginOfLastName - 1);
-	return firstName;
+	string secondParametr;
+	int beginOfFirstParametr = request.find("|") + 1;
+	string parametrs = request.substr(beginOfFirstParametr, request.size() - beginOfFirstParametr);
+	int beginOfLastParametr = parametrs.find("|") + 1;
+	secondParametr = parametrs.substr(beginOfLastParametr, parametrs.size() - beginOfLastParametr - 1);
+	secondParametr += '\0';
+	return secondParametr;
 }
