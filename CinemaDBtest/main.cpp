@@ -17,7 +17,7 @@ using namespace std;
 int main()
 {
 	CinemaDB *cinemaDB = new CinemaDB("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
-	cout << cinemaDB->getSessionInformationByClient("Pushkin");
+	//cout << cinemaDB->getSessionInformationByClient("Pusfhkin");
 	//cout << cinemaDB->getListStringNameOfFilm() << endl;
 	//cinemaDB->insertUser("Erno", "Sergeev", "Artem");
 	//list<string> listOfUsers= cinemaDB->getListOfUsers();

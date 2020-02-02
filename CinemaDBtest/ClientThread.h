@@ -205,6 +205,21 @@ private:
 			}
 		}
 	}
+
+	//func to send information about all client sessions
+	int sendSessionsInformation()
+	{
+		string sessionsInformation = this->cinemaDB->getSessionInformationByClient(this->nickName.c_str());
+		this->result = send(clientSocket, sessionsInformation.c_str(), sessionsInformation.length(), 0);
+		if (this->result < 0)
+		{
+			return -1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 	
 public:
 	ClientThread(int clientSocket, const char* conectPath)
@@ -339,7 +354,7 @@ public:
 				}
 			}
 
-			//reques to add new user session to data base
+			//request to add new user session to data base
 			if (stringOfRequest.find("addUserSessionToDB") != std::string::npos)
 			{
 				this->result = this->addNewUserSessionToDB();
@@ -356,6 +371,20 @@ public:
 					{
 						cout << "error of adding new user session to database" << endl;
 					}
+			}
+
+			//request to get information about all user session by nickname
+			if (stringOfRequest.find("getMySessionsInformation") != std::string::npos)
+			{
+				this->result = this->sendSessionsInformation();
+				if (this->result < 0)
+				{
+					cout << "error of sending answer to user" << endl;
+				}
+				else
+				{
+					cout << "sessions information was send to user" << endl;
+				}
 			}
 		}
 	}
