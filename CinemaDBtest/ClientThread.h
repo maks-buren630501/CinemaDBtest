@@ -1,24 +1,17 @@
-#pragma once
 #include <iostream>
-#include<list>
 #include <sstream>
 #include <string>
 #include <ctime>
 #include <chrono>
 #include<fstream>
-#include"CinemaDB.h"
 #include"Function.h"
-#include <windows.h>
-#include<thread>
-#define _WIN32_WINNT 0x501
-
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-#pragma comment(lib, "Ws2_32.lib")
 
 const int maxBufferSize = 1024;
 
+
+
 using namespace std;
+
 
 class ClientThread
 {
@@ -315,7 +308,7 @@ public:
 			//request to send list of session by film title
 			if(stringOfRequest.find("getSessionByFilmTitle") != std::string::npos)
 			{
-				this->result = this->sendListOfSessionByFilmTitle;
+				this->result = this->sendListOfSessionByFilmTitle();
 				if (this->result < 0)
 				{
 					cout << "error of sending answer to user" << endl;

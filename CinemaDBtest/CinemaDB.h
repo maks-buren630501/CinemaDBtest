@@ -1,5 +1,4 @@
 #pragma once
-#import <C:\\Program Files\\Common Files\\system\\ado\\msado15.dll> rename( "EOF", "AdoNSEOF" )
 
 #include<iostream>
 #include <typeinfo>

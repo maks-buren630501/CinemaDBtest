@@ -1,22 +1,14 @@
-#pragma once
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <ctime>
 #include <chrono>
 #include<fstream>
-#include"CinemaDB.h"
 #include"ClientThread.h"
 #include"Function.h"
-#include <windows.h>
 #include<thread>
-#define _WIN32_WINNT 0x501
 
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-#pragma comment(lib, "Ws2_32.lib")
 
-const int maxBufferSize = 1024;
 
 using namespace std;
 
@@ -38,8 +30,6 @@ void serverWork(int clientSocket,string conectPath)
 	
 
 }
-
-
 
 class Server
 {
@@ -79,12 +69,8 @@ public:
 			cout << "socket create error" << endl;
 			system("pause");
 		}
-		result = bind(serverSocket, address->ai_addr, (int)address->ai_addrlen);//привязываем сокет к ip 
-		if (result == SOCKET_ERROR)
-		{
-			cout << "socket addres error" << endl;
-			system("pause");
-		}
+		bind(serverSocket, address->ai_addr, (int)address->ai_addrlen);//привязываем сокет к ip 
+		
 	}
 	
 	~Server()
