@@ -166,11 +166,11 @@ private:
 	//func to add new user session to data base
 	int addNewUserSessionToDB()
 	{
-		string hallString = getFirstParametrFromRequest(this->stringOfRequest);
+		string sessionString = getFirstParametrFromRequest(this->stringOfRequest);
 		string placeString = getSecondParametrFromRequest(this->stringOfRequest);
-		int numOfHall = std::stoi(hallString);
+		int numOfSession = std::stoi(sessionString);
 		int place = std::stoi(placeString);
-		this->result = this->cinemaDB->insertClient(this->nickName.c_str(),numOfHall,place);
+		this->result = this->cinemaDB->insertClient(this->nickName.c_str(), numOfSession,place);
 		if (this->result < 0)
 		{
 			this->answer = "errorOfAddingToDB|\n";
