@@ -57,7 +57,7 @@ string getStringOfFreePlaces(list<int> freePlaces)
 	{
 		freePlaceString += std::to_string(i) + "|";
 	}
-	freePlaceString += "\0";
+	freePlaceString += "\n";
 	return freePlaceString;
 }
 

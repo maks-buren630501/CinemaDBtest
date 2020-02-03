@@ -23,8 +23,9 @@ using namespace std;
 
 int main()
 {
-	//CinemaDB *cinemaDB = new CinemaDB("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
-	Server* server = new Server("127.0.0.1","8080", "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
+	//Server* server = new Server("127.0.0.1","8080", "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
+	CinemaDB *cinema = new CinemaDB("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
+	cout << cinema->getListOfSessionByFileTitle("Titanic") << endl;
 
 	system("pause");
 	

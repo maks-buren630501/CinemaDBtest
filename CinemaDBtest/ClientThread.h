@@ -32,7 +32,7 @@ private:
 		string nickName = getNameFromRequest(this->stringOfRequest);
 		if (std::find(listOfUsers.begin(), listOfUsers.end(), nickName) == listOfUsers.end())
 		{
-			this->answer = "nickNameIsFree|\0";
+			this->answer = "nickNameIsFree|\n";
 			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
 			if (this->result < 0)
 			{
@@ -47,7 +47,7 @@ private:
 		}
 		else
 		{
-			this->answer = "nickNameIsBusy|\0";
+			this->answer = "nickNameIsBusy|\n";
 			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
 			if (this->result < 0)
 			{
@@ -68,7 +68,7 @@ private:
 		this->result = this->cinemaDB->insertUser(this->nickName.c_str(),lastName.c_str(),firstName.c_str());
 		if (this->result < 0)
 		{
-			this->answer = "errorOfAddingToDB|\0";
+			this->answer = "errorOfAddingToDB|\n";
 			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
 			if (this->result < 0)
 			{
@@ -81,7 +81,7 @@ private:
 		}
 		else 
 		{
-			this->answer = "sucsesAddingToDB|\0";
+			this->answer = "successfullyAddingToDB|\n";
 			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
 			if (this->result < 0)
 			{
@@ -111,7 +111,7 @@ private:
 	}
 
 	//func to send list of session by film title
-	int sendListOfSessionByFilmTitle()
+	int sendListOfSessionByFilmTittle()
 	{
 		string filmTitle = getNameFromRequest(this->stringOfRequest);
 		string listOfSession = this->cinemaDB->getListOfSessionByFileTitle(filmTitle.c_str());
@@ -132,7 +132,7 @@ private:
 		int numOfSession = std::stoi(getNameFromRequest(this->stringOfRequest));
 		int numOfHall = this->cinemaDB->getHallByNumOfSession(numOfSession);
 		string hall = std::to_string(numOfHall);
-		hall += "|\0";
+		hall += "|\n";
 		this->result = send(clientSocket, hall.c_str(), hall.length(), 0);
 		if (this->result < 0)
 		{
@@ -173,7 +173,7 @@ private:
 		this->result = this->cinemaDB->insertClient(this->nickName.c_str(),numOfHall,place);
 		if (this->result < 0)
 		{
-			this->answer = "errorOfAddingToDB|\0";
+			this->answer = "errorOfAddingToDB|\n";
 			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
 			if (this->result < 0)
 			{
@@ -186,7 +186,7 @@ private:
 		}
 		else
 		{
-			this->answer = "sucsesAddingToDB|\0";
+			this->answer = "successfullyAddingToDB|\n";
 			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
 			if (this->result < 0)
 			{
@@ -306,9 +306,9 @@ public:
 			}
 
 			//request to send list of session by film title
-			if(stringOfRequest.find("getSessionByFilmTitle") != std::string::npos)
+			if(stringOfRequest.find("getSessionByFilmTittle") != std::string::npos)
 			{
-				this->result = this->sendListOfSessionByFilmTitle();
+				this->result = this->sendListOfSessionByFilmTittle();
 				if (this->result < 0)
 				{
 					cout << "error of sending answer to user" << endl;

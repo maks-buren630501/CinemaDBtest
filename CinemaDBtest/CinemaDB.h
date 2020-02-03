@@ -78,7 +78,7 @@ public:
 			cout << "error" << endl;
 		}
 		pRecordset->Close();
-		listOfFilms += "\0";
+		listOfFilms += "\n";
 		return listOfFilms;
 	}
 
@@ -117,7 +117,7 @@ public:
 	{
 		string listOfSession;
 		TESTHR(pRecordset.CreateInstance(__uuidof(ADODB::Recordset)));
-		string request = "SELECT Num FROM Sessions WHERE Film=\'" + string(title) + "\';";
+		string request = "SELECT Num,Film,Date_of_session,Time_of_session FROM Sessions WHERE Film=\'" + string(title) + "\';";
 		_bstr_t query = request.c_str();
 		hr = pRecordset->Open(query, _variant_t((IDispatch *)pConnection, true), ADODB::adOpenUnspecified, ADODB::adLockUnspecified, ADODB::adCmdText);
 		if (SUCCEEDED(hr))
@@ -132,8 +132,9 @@ public:
 				for (long nIndex = 0; nIndex < pFields->GetCount(); nIndex++) {
 
 					string temp = bstr_to_str(_bstr_t(pFields->GetItem(nIndex)->GetValue()));
-					listOfSession += temp + "|";
+					listOfSession += temp + "/";
 				}
+				listOfSession += "|";
 				pRecordset->MoveNext();
 			}
 		}
@@ -142,7 +143,7 @@ public:
 			cout << "error" << endl;
 		}
 		pRecordset->Close();
-		listOfSession += "\0";
+		listOfSession += "\n";
 		return listOfSession;
 	}
 
@@ -276,7 +277,7 @@ public:
 			cout << "error" << endl;
 		}
 		pRecordset->Close();
-		listOfSession += "\0";
+		listOfSession += "\n";
 		return listOfSession;
 	}
 
