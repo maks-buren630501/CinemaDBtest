@@ -149,6 +149,25 @@ private:
 		}
 	}
 
+	//func to send hall size by num of session
+	int sendHallSizeFromNumOfSession()
+	{
+		int numOfSession = std::stoi(getNameFromRequest(this->stringOfRequest));
+		int hallSize = this->cinemaDB->getHallSizeByNumOfSession(numOfSession);
+		string hallSizeString = std::to_string(hallSize);
+		hallSizeString += "|\n";
+		cout << hallSizeString << endl;
+		this->result = send(clientSocket, hallSizeString.c_str(), hallSizeString.size(), 0);
+		if (this->result < 0)
+		{
+			return -1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
 	//func to send free places by session num
 	int sendFreePlacesByNumOfSession()
 	{
@@ -338,6 +357,20 @@ public:
 				else
 				{
 					cout << "num of hall was send to user" << endl;
+				}
+			}
+
+			//requset to send hall size by num of session
+			if (stringOfRequest.find("getHallSizeByNumOfSession") != std::string::npos)
+			{
+				this->result = this->sendHallSizeFromNumOfSession();
+				if (this->result < 0)
+				{
+					cout << "error of sending answer to user" << endl;
+				}
+				else
+				{
+					cout << "size of hall was send to user" << endl;
 				}
 			}
 
