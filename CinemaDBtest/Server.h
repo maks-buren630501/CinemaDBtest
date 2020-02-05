@@ -7,10 +7,14 @@
 #include"ClientThread.h"
 #include"Function.h"
 #include<thread>
+#include<winsock.h>
 
 
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+
 
 void serverWork(int clientSocket,string conectPath)
 {
@@ -49,7 +53,7 @@ public:
 		result = WSAStartup(MAKEWORD(2, 2), &wsaData);//старт использования библиотеки сокетов
 		if (result != 0)
 		{
-			cout << "wsa start failed" << endl;
+			std::cout << "wsa start failed" << endl;
 			system("pause");
 		}
 		ZeroMemory(&hints, sizeof(hints));// шаблон для реализации структуры адреса
@@ -60,16 +64,22 @@ public:
 		result = getaddrinfo(ipAddress, port, &hints, &address);// инициализация структуры хранящий адрес,port - номер порта
 		if (result != 0)
 		{
-			cout << "error getaddres info" << endl;
+			std::cout << "error getaddres info" << endl;
 			system("pause");
 		}
 		serverSocket = socket(address->ai_family, address->ai_socktype, address->ai_protocol);//создание сокета
 		if (serverSocket == INVALID_SOCKET)
 		{
-			cout << "socket create error" << endl;
+			std::cout << "socket create error" << endl;
 			system("pause");
 		}
-		bind(serverSocket, address->ai_addr, (int)address->ai_addrlen);//привязываем сокет к ip 
+		result = bind(serverSocket, address->ai_addr, (int)address->ai_addrlen);
+		if (result < 0)
+		{
+			cout << "socket bind error" << endl;
+		}
+		
+		
 		
 	}
 	
@@ -85,7 +95,7 @@ public:
 		result = listen(serverSocket, SOMAXCONN);
 		if (result == SOCKET_ERROR) // инициализация слущающего сокета, SOMAXCONN - максимальное кол-во tcp соединений
 		{
-			cout << "listen socket error" << endl;
+			std::cout << "listen socket error" << endl;
 			system("pause");
 			return -1;
 		}
@@ -95,9 +105,10 @@ public:
 		while (TRUE)
 		{
 			clientSocket = accept(serverSocket, addr, NULL);
+			std::cout << "connection accept" << endl;
 			if (clientSocket == INVALID_SOCKET)
 			{
-				cout << "client_socket error" << endl;
+				std::cout << "client_socket error" << endl;
 				system("pause");
 				return -2;
 			}

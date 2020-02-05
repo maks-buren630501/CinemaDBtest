@@ -12,7 +12,7 @@
 #include"Function.h"
 #include<list>
 
-using namespace std;
+using std::exception;
 
 
 inline void TESTHR(HRESULT _hr)

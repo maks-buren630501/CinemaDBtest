@@ -4,8 +4,12 @@
 #include<list>
 #include<string>
 
+using std::cout;
+using std::endl;
+using std::string;
+using std::list;
 
-using namespace std;
+
 
 string bstr_to_str(BSTR source);
 

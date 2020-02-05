@@ -2,6 +2,7 @@
 
 #include <WinSock2.h>
 #include <WS2tcpip.h>
+#include<winsock.h>
 #pragma comment(lib, "Ws2_32.lib")
 
 #import <C:\\Program Files\\Common Files\\system\\ado\\msado15.dll> rename( "EOF", "AdoNSEOF" )
@@ -19,13 +20,17 @@
 #include"Server.h"
 #include<list>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+using std::exception;
+
 
 int main()
 {
-	//Server* server = new Server("127.0.0.1","8080", "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
-	CinemaDB *cinema = new CinemaDB("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
-	cout << cinema->getListOfSessionByFileTitle("Titanic") << endl;
+	Server* server = new Server("127.0.0.1","8080", "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
+	server->setServerToListen();
+	
 
 	system("pause");
 	

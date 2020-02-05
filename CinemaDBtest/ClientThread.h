@@ -10,7 +10,10 @@ const int maxBufferSize = 1024;
 
 
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+
 
 
 class ClientThread
@@ -30,6 +33,7 @@ private:
 	{
 		list<string> listOfUsers = this->cinemaDB->getListOfUsers();
 		string nickName = getNameFromRequest(this->stringOfRequest);
+		cout << "nick = " << nickName << endl;
 		if (std::find(listOfUsers.begin(), listOfUsers.end(), nickName) == listOfUsers.end())
 		{
 			this->answer = "nickNameIsFree|\n";
@@ -55,6 +59,7 @@ private:
 			}
 			else
 			{
+				this->nickName = nickName;
 				return 1;
 			}
 		}
@@ -232,6 +237,7 @@ public:
 	{
 		while (true)
 		{
+			memset(this->requestBuffer,0, maxBufferSize + 1);
 			this->requestLength = recv(this->clientSocket, this->requestBuffer, maxBufferSize, 0);
 
 			//chek of reception error
@@ -251,6 +257,8 @@ public:
 
 			this->requestBuffer[requestLength] = '\0';
 			this->stringOfRequest = this->requestBuffer;
+
+			cout << this->stringOfRequest << endl;
 			
 			//request type is check user nickname is busy or no
 			if(stringOfRequest.find("checkUserNickName") != std::string::npos)
@@ -306,7 +314,7 @@ public:
 			}
 
 			//request to send list of session by film title
-			if(stringOfRequest.find("getSessionByFilmTittle") != std::string::npos)
+			if(stringOfRequest.find("getSessionsByFilmTittle") != std::string::npos)
 			{
 				this->result = this->sendListOfSessionByFilmTittle();
 				if (this->result < 0)

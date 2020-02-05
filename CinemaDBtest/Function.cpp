@@ -66,7 +66,6 @@ string getNameFromRequest(string request)
 	string Name;
 	int beginOfName = request.find("|") + 1;
 	Name = request.substr(beginOfName,request.size()-beginOfName-1);
-	Name += '\0';
 	return Name;
 }
 
@@ -77,7 +76,6 @@ string getFirstParametrFromRequest(string request)
 	string parametrs= request.substr(beginOfFirstParametr, request.size() - beginOfFirstParametr);
 	int endOfFirstParametr = parametrs.find("|");
 	FirstParametr = parametrs.substr(0, endOfFirstParametr);
-	FirstParametr += '\0';
 	return FirstParametr;
 }
 
@@ -88,6 +86,5 @@ string getSecondParametrFromRequest(string request)
 	string parametrs = request.substr(beginOfFirstParametr, request.size() - beginOfFirstParametr);
 	int beginOfLastParametr = parametrs.find("|") + 1;
 	secondParametr = parametrs.substr(beginOfLastParametr, parametrs.size() - beginOfLastParametr - 1);
-	secondParametr += '\0';
 	return secondParametr;
 }
