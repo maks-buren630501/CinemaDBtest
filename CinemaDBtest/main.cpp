@@ -28,8 +28,19 @@ using std::exception;
 
 int main()
 {
-	Server* server = new Server("127.0.0.1","8080", "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
-	server->setServerToListen();
+	//Server* server = new Server("127.0.0.1","8080", "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
+	//server->setServerToListen();
+
+	string request = "123|456|789|321|";
+
+	cout << getParameterByNumber(request, 2) << endl;
+	cout << getNameFromRequest(request) << endl;
+
+	cout << getParameterByNumber(request, 2) << endl;
+	cout << getFirstParametrFromRequest(request) << endl;
+
+	cout << getParameterByNumber(request, 3) << endl;
+	cout << getSecondParametrFromRequest(request) << endl;
 	
 
 	system("pause");

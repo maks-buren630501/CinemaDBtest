@@ -32,7 +32,8 @@ private:
 	int checkUserNickName()
 	{
 		list<string> listOfUsers = this->cinemaDB->getListOfUsers();
-		string nickName = getNameFromRequest(this->stringOfRequest);
+		//string nickName = getNameFromRequest(this->stringOfRequest); old fuct use
+		string nickName = getParameterByNumber(this->stringOfRequest,2);
 		cout << "nick = " << nickName << endl;
 		if (std::find(listOfUsers.begin(), listOfUsers.end(), nickName) == listOfUsers.end())
 		{
@@ -68,8 +69,10 @@ private:
 	//func to add new user to data base, in the begin we know nickname add will get last and first name from text of request
 	int addNewUserToDB()
 	{
-		string lastName = getFirstParametrFromRequest(this->stringOfRequest);
-		string firstName = getSecondParametrFromRequest(this->stringOfRequest);
+		//string lastName = getFirstParametrFromRequest(this->stringOfRequest); old func
+		//string firstName = getSecondParametrFromRequest(this->stringOfRequest);
+		string lastName = getParameterByNumber(this->stringOfRequest,2);
+		string firstName = getParameterByNumber(this->stringOfRequest, 3);
 		this->result = this->cinemaDB->insertUser(this->nickName.c_str(),lastName.c_str(),firstName.c_str());
 		if (this->result < 0)
 		{
@@ -190,8 +193,10 @@ private:
 	//func to add new user session to data base
 	int addNewUserSessionToDB()
 	{
-		string sessionString = getFirstParametrFromRequest(this->stringOfRequest);
-		string placeString = getSecondParametrFromRequest(this->stringOfRequest);
+		//string sessionString = getFirstParametrFromRequest(this->stringOfRequest); old func
+		//string placeString = getSecondParametrFromRequest(this->stringOfRequest);
+		string sessionString = getParameterByNumber(this->stringOfRequest,2);
+		string placeString = getParameterByNumber(this->stringOfRequest,3);
 		int numOfSession = std::stoi(sessionString);
 		int place = std::stoi(placeString);
 		this->result = this->cinemaDB->insertClient(this->nickName.c_str(), numOfSession,place);

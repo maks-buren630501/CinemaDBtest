@@ -25,3 +25,5 @@ string getFirstParametrFromRequest(string request);
 
 string getSecondParametrFromRequest(string request);
 
+string getParameterByNumber(string request,int number);
+

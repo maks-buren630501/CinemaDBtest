@@ -30,21 +30,14 @@ list<int> getFreePlacesList(list<int> listOfBusyPlaces, int sizeOfHall)
 	int flag = 0;
 	for (int i = 1; i < sizeOfHall + 1; i++)
 	{
-		for (int j : listOfBusyPlaces)
+		if (std::find(listOfBusyPlaces.begin(), listOfBusyPlaces.end(), i) != listOfBusyPlaces.end())
 		{
-			if (i == j)
-			{
-				flag = 1;
-				break;
-			}
-		}
-		if (flag == 1)
-		{
-			flag = 0;
-
 			continue;
 		}
-		allPlacesList.push_back(i);
+		else
+		{
+			allPlacesList.push_back(i);
+		}
 	}
 	return allPlacesList;
     
@@ -87,4 +80,21 @@ string getSecondParametrFromRequest(string request)
 	int beginOfLastParametr = parametrs.find("|") + 1;
 	secondParametr = parametrs.substr(beginOfLastParametr, parametrs.size() - beginOfLastParametr - 1);
 	return secondParametr;
+}
+
+string getParameterByNumber(string request, int number)
+{
+	while (true)
+	{
+		number--;
+		int endOfFirstParam = request.find("|");
+		if (number == 0)
+		{
+			return request.substr(0, endOfFirstParam);
+		}
+		else
+		{
+			return getParameterByNumber(request.substr(endOfFirstParam + 1,request.size() - endOfFirstParam),number);
+		}
+	}
 }
