@@ -276,7 +276,7 @@ public:
 			if (this->requestLength == 0)
 			{
 				cout << "empty reqv" << endl;
-				continue;
+				break;
 			}
 
 			this->requestBuffer[requestLength] = '\0';

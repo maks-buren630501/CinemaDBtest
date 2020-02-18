@@ -114,6 +114,7 @@ public:
 			}
 			else
 			{
+				cout << "new connect" << endl;
 				std::thread clientThread(serverWork,clientSocket, this->dbCinemaConectPath);
 				clientThread.detach();
 			}
