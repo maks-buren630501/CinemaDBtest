@@ -27,3 +27,4 @@ string getSecondParametrFromRequest(string request);
 
 string getParameterByNumber(string request,int number);
 
+string getStringListOfUsers(list<string> listOfUsers);

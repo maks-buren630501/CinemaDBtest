@@ -119,6 +119,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdminThread.h" />
     <ClInclude Include="CinemaDB.h" />
     <ClInclude Include="ClientThread.h" />
     <ClInclude Include="Function.h" />

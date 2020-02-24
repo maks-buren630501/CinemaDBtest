@@ -98,3 +98,13 @@ string getParameterByNumber(string request, int number)
 		}
 	}
 }
+
+string getStringListOfUsers(list<string> listOfUsers)
+{
+	string stringListOfUsers = "";
+	for (string user : listOfUsers)
+	{
+		stringListOfUsers += user + "|";
+	}
+	return stringListOfUsers;
+}

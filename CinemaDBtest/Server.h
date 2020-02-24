@@ -5,6 +5,7 @@
 #include <chrono>
 #include<fstream>
 #include"ClientThread.h"
+#include"AdminThread.h"
 #include"Function.h"
 #include<thread>
 #include<winsock.h>
@@ -35,6 +36,23 @@ void serverWork(int clientSocket,string conectPath)
 
 }
 
+void serverAdminWork(int clientSocket, string conectPath)
+{
+	AdminThread *adminThread = new AdminThread(clientSocket, conectPath.c_str());
+	if (adminThread->workAdmin() < 0)
+	{
+		cout << "error of client thread working" << endl;
+		delete adminThread;
+		return;
+	}
+	else
+	{
+		cout << "end work of client thread" << endl;
+		delete adminThread;
+		return;
+	}
+}
+
 class Server
 {
 private:
@@ -45,10 +63,12 @@ private:
 	SOCKET serverSocket;
 	SOCKET clientSocket;
 	int result;
+	int mode;
 
 public:
-	Server(const char* ipAddress, const char* port, const char* conectPath)
+	Server(const char* ipAddress, const char* port, const char* conectPath, int mode)
 	{
+		this->mode = mode;
 		this->dbCinemaConectPath = conectPath;
 		result = WSAStartup(MAKEWORD(2, 2), &wsaData);//старт использования библиотеки сокетов
 		if (result != 0)
@@ -114,9 +134,18 @@ public:
 			}
 			else
 			{
-				cout << "new connect" << endl;
-				std::thread clientThread(serverWork,clientSocket, this->dbCinemaConectPath);
-				clientThread.detach();
+				if (this->mode == 0)
+				{
+					cout << "new connect client" << endl;
+					std::thread clientThread(serverWork, clientSocket, this->dbCinemaConectPath);
+					clientThread.detach();
+				}
+				else
+				{
+					cout << "new connect admin" << endl;
+					std::thread clientThread(serverAdminWork, clientSocket, this->dbCinemaConectPath);
+					clientThread.detach();
+				}
 			}
 
 		}

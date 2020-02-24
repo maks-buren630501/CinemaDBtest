@@ -32,7 +32,6 @@ private:
 	int checkUserNickName()
 	{
 		list<string> listOfUsers = this->cinemaDB->getListOfUsers();
-		//string nickName = getNameFromRequest(this->stringOfRequest); old fuct use
 		string nickName = getParameterByNumber(this->stringOfRequest,2);
 		cout << "nick = " << nickName << endl;
 		if (std::find(listOfUsers.begin(), listOfUsers.end(), nickName) == listOfUsers.end())
@@ -69,8 +68,6 @@ private:
 	//func to add new user to data base, in the begin we know nickname add will get last and first name from text of request
 	int addNewUserToDB()
 	{
-		//string lastName = getFirstParametrFromRequest(this->stringOfRequest); old func
-		//string firstName = getSecondParametrFromRequest(this->stringOfRequest);
 		string lastName = getParameterByNumber(this->stringOfRequest,2);
 		string firstName = getParameterByNumber(this->stringOfRequest, 3);
 		this->result = this->cinemaDB->insertUser(this->nickName.c_str(),lastName.c_str(),firstName.c_str());
@@ -334,7 +331,6 @@ public:
 				{
 					cout << "list of film was send to user" << endl;
 				}
-
 			}
 
 			//request to send list of session by film title
