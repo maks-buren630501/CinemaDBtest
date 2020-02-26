@@ -6,10 +6,6 @@
 #include<fstream>
 #include"Function.h"
 
-const int maxBufferSize = 1024;
-
-
-
 using std::cout;
 using std::endl;
 using std::string;

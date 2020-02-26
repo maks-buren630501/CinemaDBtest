@@ -317,14 +317,13 @@ public:
 		}
 	}
 
-	//need to test
 	int insertFilm(const char* title, const char* country, const char* date)
 	{
 		try
 		{
 			hr = pComand.CreateInstance(__uuidof(ADODB::Command));
 			pComand->ActiveConnection = pConnection;
-			string temp = "INSERT INTO Films (Title,Country,Year) VALUES (\'" + string(title) + "\',\'" + string(country) + "\',\'" + string(date) + "\');";
+			string temp = "INSERT INTO Films (Title,Country,[Year]) VALUES (\'" + string(title) + "\',\'" + string(country) + "\',\'" + string(date) + "\');";
 			_bstr_t query = temp.c_str();
 			pComand->CommandText = query;
 			pComand->Execute(NULL, NULL, ADODB::adCmdText);
@@ -332,6 +331,7 @@ public:
 		}
 		catch (exception e)
 		{
+			cout << "error" << endl;
 			return -1;
 		}
 	}
