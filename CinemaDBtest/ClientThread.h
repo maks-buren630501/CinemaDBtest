@@ -190,8 +190,6 @@ private:
 	//func to add new user session to data base
 	int addNewUserSessionToDB()
 	{
-		//string sessionString = getFirstParametrFromRequest(this->stringOfRequest); old func
-		//string placeString = getSecondParametrFromRequest(this->stringOfRequest);
 		string sessionString = getParameterByNumber(this->stringOfRequest,2);
 		string placeString = getParameterByNumber(this->stringOfRequest,3);
 		int numOfSession = std::stoi(sessionString);

@@ -120,6 +120,98 @@ private:
 		}
 	}
 
+	int addNewFilmToDB()
+	{
+		string filmTitle = getParameterByNumber(this->stringOfRequest, 2);
+		string country = getParameterByNumber(this->stringOfRequest, 3);
+		string date = getParameterByNumber(this->stringOfRequest, 4);
+		this->result = this->cinemaDB->insertFilm(filmTitle.c_str(), country.c_str(), date.c_str());
+		if (this->result < 0)
+		{
+			this->answer = "errorOfAddingToDB|\0";
+			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
+			if (this->result < 0)
+			{
+				return -1;
+			}
+			else
+			{
+				return -2;
+			}
+		}
+		else
+		{
+			this->answer = "successfullyAddingToDB|\0";
+			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
+			if (this->result < 0)
+			{
+				return -1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+	}
+
+	int addNewSessionToDB()
+	{
+		string filmTitle = getParameterByNumber(this->stringOfRequest, 2);
+		string date = getParameterByNumber(this->stringOfRequest, 3);
+		string time = getParameterByNumber(this->stringOfRequest, 4);
+		string hall = getParameterByNumber(this->stringOfRequest, 5);
+		this->result = this->cinemaDB->insertSession(filmTitle.c_str(), date.c_str(), time.c_str(), std::stoi(hall));
+		if (this->result < 0)
+		{
+			this->answer = "errorOfAddingToDB|\0";
+			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
+			if (this->result < 0)
+			{
+				return -1;
+			}
+			else
+			{
+				return -2;
+			}
+		}
+		else
+		{
+			this->answer = "successfullyAddingToDB|\0";
+			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
+			if (this->result < 0)
+			{
+				return -1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+	}
+
+	int addNewUserSessionToDB()
+	{
+		string nickName = getParameterByNumber(this->stringOfRequest, 2);
+		string sessionString = getParameterByNumber(this->stringOfRequest, 3);
+		string placeString = getParameterByNumber(this->stringOfRequest, 4);
+		int numOfSession = std::stoi(sessionString);
+		int place = std::stoi(placeString);
+		this->result = this->cinemaDB->insertClient(nickName.c_str(), numOfSession, place);
+		if (this->result < 0)
+		{
+			this->answer = "errorOfAddingToDB|\n";
+			this->result = send(clientSocket, answer.c_str(), answer.length(), 0);
+			if (this->result < 0)
+			{
+				return -1;
+			}
+			else
+			{
+				return -2;
+			}
+		}
+	}
+
 public:
 	AdminThread(int clientSocket, const char* conectPath)
 	{
@@ -224,9 +316,58 @@ public:
 					}
 			}
 
+			if (stringOfRequest.find("addNewUserSession") != std::string::npos)
+			{
+				this->result = this->addNewUserSessionToDB();
+				if (this->result == 0)
+				{
+					cout << "sucsess adding new user session to database" << endl;
+				}
+				else
+					if (this->result == -1)
+					{
+						cout << "error of sending answer to admin" << endl;
+					}
+					else
+					{
+						cout << "error of adding new user session to database" << endl;
+					}
+			}
+
 			if (stringOfRequest.find("addNewFilmToDataBase") != std::string::npos)
 			{
+				this->result = this->addNewFilmToDB();
+				if (this->result == 0)
+				{
+					cout << "sucsess adding new film to database" << endl;
+				}
+				else
+					if (this->result == -1)
+					{
+						cout << "error of sending answer to admin" << endl;
+					}
+					else
+					{
+						cout << "error of adding new film to database" << endl;
+					}
+			}
 
+			if (stringOfRequest.find("addNewSessionToDataBase") != std::string::npos)
+			{
+				this->result = this->addNewSessionToDB();
+				if (this->result == 0)
+				{
+					cout << "sucsess adding new session to database" << endl;
+				}
+				else
+					if (this->result == -1)
+					{
+						cout << "error of sending answer to admin" << endl;
+					}
+					else
+					{
+						cout << "error of adding new session to database" << endl;
+					}
 			}
 
 		}
