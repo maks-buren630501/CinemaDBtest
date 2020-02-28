@@ -39,7 +39,7 @@ private:
 
 	int sendListOfFilms()
 	{
-		string listOfFilms = this->cinemaDB->getListStringNameOfFilm();
+		string listOfFilms = this->cinemaDB->getListOfFilms();
 		listOfFilms += '\0';
 		this->result = send(clientSocket, listOfFilms.c_str(), listOfFilms.length(), 0);
 		if (this->result < 0)

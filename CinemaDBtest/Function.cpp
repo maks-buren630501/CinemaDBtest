@@ -108,3 +108,66 @@ string getStringListOfUsers(list<string> listOfUsers)
 	}
 	return stringListOfUsers;
 }
+
+list<string> getListOfParams(string answer)
+{
+
+	string temp;
+	list<string> listOfParams;
+	for (int i = 0; i < answer.size(); i++)
+	{
+		if (answer[i] == '|')
+		{
+			listOfParams.push_back(temp);
+			temp = "";
+			continue;
+		}
+		temp += answer[i];
+	}
+	return listOfParams;
+}
+
+Film getFilmFromString(string answer)
+{
+	int fl = 0;
+	string temp;
+	string title;
+	string country;
+	string date;
+
+	for (int i = 0; i < answer.size(); i++)
+	{
+		if (answer[i] == '/')
+		{
+			switch (fl)
+			{
+			case 0:
+			{
+				title = temp.c_str();
+				temp = "";
+				fl++;
+				i++;
+				break;
+			}
+			case 1:
+			{
+				country = temp.c_str();
+				temp = "";
+				fl++;
+				i++;
+				break;
+			}
+			case 2:
+			{
+				date = temp.c_str();
+				temp = "";
+				fl++;
+				continue;
+			}
+			}
+		}
+		temp += answer[i];
+		Film film = Film(title.c_str(), country.c_str(), date.c_str());
+		return film;
+	}
+}

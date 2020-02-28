@@ -30,10 +30,17 @@ int main()
 {
 	//Server* server = new Server("192.168.43.10","8080", "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;",0);
 	//server->setServerToListen();
-	CinemaDB *cinemaDB = new CinemaDB("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
-	//cinemaDB->insertFilm("Old man", "USA", "12.12.2012");
-	cinemaDB->insertSession("Old man", "29.02.2020", "20:00:00", 2);
-	
+	//CinemaDB *cinemaDB = new CinemaDB("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\\AccesDB\\CinemaDB.accdb;");
+	/*list<string> params = getListOfParams("1/2/3/|1/3/5/|3/5/1/|");
+	for (string s : params)
+	{
+		cout << s << endl;
+	}
+	*/
+	Film film = getFilmFromString("123/456/789/");
+	cout << film.getTitle();
+	cout << film.getCountry();
+	cout << film.getDate();
 
 	system("pause");
 	
